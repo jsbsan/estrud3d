@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,95,66)
+  Text = ("Esfuerzos en los extremos de las barras")
+  { aceptar Button
+    MoveScaled(75,60,16,4)
+    Text = ("Cerrar")
+  }
+  { tabesfbar GridView
+    MoveScaled(1,1,16,16)
+    Header = GridView.Both
+  }
+}

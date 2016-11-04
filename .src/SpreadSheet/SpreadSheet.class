@@ -1,0 +1,205 @@
+' Gambas class file
+
+Export
+
+Inherits UserControl
+
+Public Const _Properties As String = "*,Rows,Cols,Header,Corner"
+
+Private $frmSheet As FrmSpreadSheet
+
+Private Sheet As Object
+
+Private grdFormulas As Object
+
+
+Property Rows As Integer
+Property Cols As Integer
+
+Property Header As Integer
+
+Property Read RowsMax As Integer
+Property Read ColumnsMax As Integer
+
+Property Corner As String 'con ambos Headers, este texto es el de la esquina superior izquierda
+Private hObs As Observer
+
+Public Sub Cell(row As Integer, col As Integer, Optional text As String = "", Optional ForeColor As Integer = -1, Optional BackColor As Integer = -1, Optional Alignment As Integer = -1)
+
+  If text <> "" Then 
+  
+     sheet[row, col].text = text
+     grdFormulas[row, col].text = text
+    
+  End If
+  If backColor >= 0 Then Sheet[row, col].Background = BackColor
+  If Forecolor >= 0 Then Sheet[row, col].foreground = ForeColor
+  If Alignment >= 0 Then Sheet[row, col].Alignment = Alignment
+
+End
+
+Public Function CellText(row As Integer, col As Integer) As String 
+
+  Return Sheet[row, col].text
+  
+
+End
+
+
+Public Function CellFloat(row As Integer, col As Integer) As Float
+
+  Return Val(Sheet[row, col].text)
+  
+
+End
+
+
+Public Sub Columns(number As Integer, Optional title As String = "", Optional BackColor As Integer = -1, Optional Size As Single = -1, Optional Alignment As Integer = -1, Optional MyFormat As String = "0.00")
+
+  If title <> "" Then Sheet.Columns[number].title = title
+  If backColor >= 0 Then Sheet.Columns[number].Background = BackColor
+  If Size >= 0 Then Sheet.Columns[number].Size = Size
+  If Alignment >= 0 Then Sheet.Columns[number].Alignment = Alignment
+  If MyFormat <> "" Then $frmSheet.aColumns[number].sFormat = MyFormat
+
+End
+
+Public Sub Row(number As Integer, title As String, ForeColor As Integer, BackColor As Integer, Size As Single, Alignment As Integer)
+
+
+
+End
+
+
+
+Public Sub _new()
+
+
+
+  $frmSheet = New FrmSpreadSheet(Me) As "tbl"
+
+  hObs = New Observer($frmSheet)
+  ' Me.Proxy = $frmSheet.tblHoja
+  
+ 
+  
+    Sheet = $frmSheet.tblHoja
+  
+    grdFormulas = $frmSheet.grdFormulas
+ 
+   
+
+  
+  
+  
+End
+
+
+
+Private Function Rows_Read() As Integer
+
+  Return $frmSheet.tblhoja.Rows.Count
+
+End
+
+Private Sub Rows_Write(Value As Integer)
+
+  $frmSheet.tblhoja.Rows.Count = Value
+  $frmSheet.grdFormulas.Rows.Count = Value
+
+End
+
+Private Function Cols_Read() As Integer
+
+  Return $frmSheet.tblhoja.Columns.Count
+
+End
+
+Private Sub Cols_Write(Value As Integer)
+
+  $frmSheet.tblhoja.Columns.Count = Value
+  
+  $frmSheet.grdFormulas.Columns.Count = Value
+  modUtils.ResizeStruct($frmSheet.aColumns, value)
+
+End
+
+Public Sub Recalcular()
+  
+  $frmSheet.recalcular
+  
+  
+End
+
+
+
+Private Function Header_Read() As Integer
+
+    Return Sheet.Headers
+
+End
+
+Private Sub Header_Write(Value As Integer)
+
+    Sheet.Header = Value
+    
+
+End
+
+Private Function RowsMax_Read() As Integer
+
+    Return $frmSheet.grdFormulas.Rows.Max
+
+End
+
+Private Function ColumnsMax_Read() As Integer
+
+    Return $frmSheet.grdFormulas.Columns.Max
+    
+
+End
+
+Private Function Corner_Read() As String
+
+    
+
+End
+
+Private Sub Corner_Write(Value As String)
+
+ 
+    $frmSheet.lblCorner.Text = Value
+    $frmSheet.lblCorner.Visible = True
+    $frmSheet.lblCorner.top = 2 
+    $frmSheet.lblCorner.Left = 2 
+    sheet.Rows.W = $frmSheet.lblCorner.w + 4 
+    $frmSheet.lblCorner.h = sheet.Rows.h - 4
+
+End
+
+Private Sub hObs_KeyPress()
+    
+  If Key.code = Key.Up Then Stop
+    
+    Stop
+End
+
+Sub $frmSheet_KeyPress()
+    ' quiero que al igual que en las hojas de calculo, cuando apreto una flecha sea como apretar <enter> y luego la flecha
+    
+    Debug Key.Text
+    Stop
+    ' If Key.code = Key.up Then
+    '     
+    '     tblHoja.Save
+    '     Try tblHoja.row -= 1
+    '     
+    '     
+    ' Endif
+    
+    
+End
+
+
+
+

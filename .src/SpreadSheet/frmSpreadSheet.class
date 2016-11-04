@@ -1,0 +1,328 @@
+' Gambas class file
+
+
+
+Private CalculationDepth As Integer
+
+
+Public tblTexto As String
+Public tblTextoAnterior As String
+Public editando As Boolean
+Public tblRow As Integer
+Public tblCol As Integer
+Public txtCorner As String
+Public cEditable As Integer 
+Public cNoEditable As Integer = Color.LightGray
+
+Public Struct colsType
+    Editable As Boolean
+    sFormat As String
+    iColor As Integer
+End Struct
+
+Public aColumns As New ColsType[]
+
+Public Sub Form_Open()
+
+
+
+
+End
+
+
+
+
+
+
+Public Sub tblHoja_Save(f As Integer, col As Integer, d As String)
+    
+    d = Trim$(d)
+    If Left$(d, 1) = "+" Then d = "=" & Mid$(d, 2)
+    If InStr("=-012345679", Left$(d, 1)) > 0 Then d = UCase$(d)
+    grdFormulas[f, col].Text = d
+    recalcular
+    If Not editando Then Try tblHoja.row += 1
+    
+    editando = False
+    
+  
+
+End
+
+Public Sub tblHoja_KeyPress()
+    Dim letternumbers As String
+    Dim numbers As String
+    Dim allowed As String
+    
+    
+    
+    If Key.Code = Key.Enter Or Key.Code = Key.Return Then 
+    
+      tblHoja.Row += 1
+      Return
+    End If
+    letternumbers = "0123456789.~QWERTYUIOP[]ASDFGHJKLZXCVBNM,./_@#$%^&*()-=+{}"
+    numbers = "0123456789."
+    allowed = letternumbers
+   
+
+    ' If tblHoja.Columns[tblHoja.Column].Background <> cEditable Then Return 'no editable
+    
+    
+    If Key.code = Key.F2 Then
+        
+        tblHoja.EditWith(txtEntry)
+        txtEntry.Text = grdFormulas[tblHoja.Row, tblHoja.Column].Text
+        editando = True
+    
+
+        
+    Else If Key.Code = Key.Esc Then
+      
+      editando = False
+    
+      
+      tblHoja.Cancel
+        
+    Else If Key.code = Key.Del Then
+      editando = False
+    
+      grdFormulas[tblHoja.Row, tblHoja.Column].Text = ""
+      recalcular
+      
+    Else If InStr(allowed, UCase$(Key.Text)) > 0 Then 
+      
+        tblHoja.EditWith(txtEntry)
+        
+        txtEntry.Text = Key.Text
+        
+        editando = False
+   
+        
+        
+        
+    End If
+    
+    
+End    
+
+
+ Private Function Solve(formula As String) As String
+  
+  ' resuelve el contenido hasta que no haya mas celdas referenciadas
+  ' esto puede dar lugar a referencias circulares y agotamiento del stack
+   ' Hipotesis:
+  ' las referencia a otras celdas estan en formato D456 , o sea una letra y un numero 
+  ' las formulas con un = y las funciones asi: Cos(xxx)  el contenido entre parentesis
+
+  ' los numeros no tienen encabezado
+  
+  'Ej tipo
+  
+  ' A28 + Sin(D85 + A3) ^ 2
+ 
+  Dim parte As New String[]
+  Dim resultado As New String[]
+  
+  
+  Dim a As Integer
+  Dim b As Integer
+  
+  Dim p1 As String
+  Dim p2 As String
+  Dim columna As Integer
+  Dim fila As Variant
+  
+  Dim pos As Integer
+  Dim largo As Integer
+  
+  Dim nuevaFormula As String
+  Dim posAnterior As Integer
+  
+  CalculationDepth += 1
+  
+  If CalculationDepth = 1000 Then 
+    
+    CalculationDepth -= 1
+    Return "Circular"
+  End If
+  
+  If formula = "" Then 
+    CalculationDepth -= 1
+    Return 0
+  End If
+  If Left$(formula, 1) <> "=" Then 
+    CalculationDepth -= 1
+    Return formula
+  End If
+  
+'   Finally
+    
+  parte = Split(formula, " ()^*-+/=")
+  
+  'estas son las partes
+  'A28 Sin D85 A3 2
+  ' If parte[0] = "" Then parte.Remove(0)
+  
+   
+  For a = 0 To parte.Max
+    
+    p1 = Mid(parte[a], 1, 1)
+    p2 = Mid(parte[a], 2, 1)
+    If parte[a] <> "" Then
+      
+      
+      If InStr("0123456789", p1) = 0 Then ' no es un numero
+        ' puede ser referencia o formula
+        If InStr("0123456789", p2) > 0 Then ' una referencia a celda
+          
+          'necesito obtener el resultado
+          columna = Asc(UCase(p1), 1) - 65
+          fila = Val(Mid(parte[a], 2)) - 1  ' el -1 es porque a pesar de estar numeradas desde el 1, en el array estan desde 0
+          ' mando a resolver la celda llamando a esta misma rutina
+          If fila >= 0 And fila <= grdFormulas.Rows.Max And columna >= 0 And columna <= grdFormulas.Columns.Max Then
+            
+            resultado.Add(Solve(grdFormulas[fila, columna].Text))
+          Else
+            CalculationDepth -= 1
+            Return "!#Error"
+          End If
+          
+        Else 'es una funcion que deberia estar en Gambas, por ejemplo Cos
+          
+          resultado.Add(parte[a]) ' simplemente la copio
+          
+        End If
+      Else ' es un numero
+          
+          
+          
+          resultado.Add(parte[a]) ' simplemente la copio
+      End If
+      Else
+        resultado.Add("")
+      
+    End If  
+  Next
+'   If parte.Max > 0 Then Stop
+  ' hasta aqui tengo las partes, entonces rearmo para pasar al Eval de gambas
+  posAnterior = 1
+  For a = 0 To parte.Max
+    If Len(parte[a]) > 0 Then
+      pos = InStr(formula, parte[a], posAnterior)
+      
+'       If pos = 0 Then Stop
+      
+      largo = Len(parte[a])
+      
+      Formula = Mid(formula, 1, pos - 1) & resultado[a] & Mid(formula, pos + largo)
+      
+      posAnterior = pos + Len(resultado[a])
+      
+    End If
+    
+  Next
+  
+  
+  Formula = Replace$(Formula, "=", "")
+  
+  Formula = Replace$(Formula, ",", ".")
+  
+  ' y finalmente
+ 
+  CalculationDepth -= 1 
+ 
+  Try Return Str$(Eval(Formula))
+
+  Return "#!Error"
+  
+  
+  
+End
+
+Public Sub recalcular() 'recalcula las celdas que tienen formula (por ahora es manual)
+
+  Dim fila As Integer, columna As Integer, v As String
+  Dim a As Integer
+  Dim b As Integer
+  
+  a = tblHoja.Row
+  b = tblHoja.Column
+  
+  
+  
+  For fila = 0 To tblHoja.Rows.Max
+    For columna = 0 To tblHoja.Columns.Max
+      If grdFormulas[fila, columna].Text <> "" Then 
+        CalculationDepth = 0
+        
+        v = Solve(grdFormulas[fila, columna].Text)
+        
+       
+        
+        If aColumns[columna].sFormat <> "" Then
+            tblHoja[fila, columna].Text = Format$(Val(v), aColumns[columna].sFormat)
+        Else
+            tblHoja[fila, columna].Text = v
+        End If
+        If CalculationDepth > 999 Then tblHoja[fila, columna].Text = "#!Circular"
+      End If
+    Next
+    
+    
+    
+  Next
+  
+  tblHoja.Row = a
+  tblHoja.Column = b
+  
+  tblHoja.SetFocus
+  
+  
+End
+
+
+Public Sub txtEntry_KeyPress()
+    ' quiero que al igual que en las hojas de calculo, cuando apreto una flecha sea como apretar <enter> y luego la flecha
+    
+    If editando Then Return
+    
+    If Key.code = Key.up Then 
+    
+        Try tblHoja.row -= 2
+        
+        
+    End If
+    
+    If Key.code = Key.Down Then tblHoja_Save(tblHoja.Row, tblHoja.Column, txtEntry.Text)    
+    
+    If Key.code = Key.Left Then 
+    
+        Try tblHoja.Column -= 1
+        tblHoja.row -= 1
+    End If
+    
+    If Key.code = Key.Right Then 
+        Try tblHoja.Column += 1
+        tblHoja.row -= 1
+    End If
+    
+    
+End
+
+
+
+
+Public Sub Form_Arrange()
+
+    lblCorner.top = tblHoja.Top
+    
+    lblCorner.Left = tblHoja.Left
+    
+    lblCorner.w = tblHoja.Rows.W
+    lblCorner.h = tblHoja.Rows.h
+
+End
+
+
+

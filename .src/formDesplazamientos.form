@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,99,64)
+  { tabesfnud GridView
+    MoveScaled(1,1,62,52)
+    Header = GridView.Both
+  }
+  { aceptar Button
+    MoveScaled(45,55,16,4)
+    Text = ("Cerrar")
+    Cancel = True
+  }
+}

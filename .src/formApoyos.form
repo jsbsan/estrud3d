@@ -1,0 +1,41 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,90,62)
+  { tblApoyo TableView
+    MoveScaled(1,1,22,54)
+    Mode = Select.Single
+  }
+  { tblParam TableView
+    MoveScaled(34,1,54,38)
+    Mode = Select.Multiple
+  }
+  { btnCerrar Button
+    MoveScaled(72,55,16,4)
+    Text = ("Cerrar")
+  }
+  { btnAdd Button
+    MoveScaled(1,56,5,5)
+    Picture = Picture["imagenes/boton_mas.png"]
+  }
+  { btnDelete Button
+    MoveScaled(18,56,5,5)
+    Picture = Picture["imagenes/boton_menos.png"]
+  }
+  { btnApFijo Button
+    MoveScaled(34,40,12,12)
+    Picture = Picture["apoyos-fijo.jpg"]
+  }
+  { btnApFijo2 Button
+    MoveScaled(49,40,12,12)
+    Picture = Picture["apoyos-movil.jpg"]
+  }
+  { btnApFijo3 Button
+    MoveScaled(63,40,12,12)
+    Picture = Picture["apoyos-fijoYZ.jpg"]
+  }
+  { btnApFijo4 Button
+    MoveScaled(77,40,11,12)
+    Picture = Picture["apoyos-empo.jpg"]
+  }
+}

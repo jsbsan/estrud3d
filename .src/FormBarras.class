@@ -1,0 +1,355 @@
+' Gambas class file
+
+'
+' estru3D
+' Software para cálculo de estructuras mediante el método de la rigidez. Calcula estructuras tridimensionales, representa esfuerzos y solicitaciones en apoyos. Gráficas elásticas.
+' 
+' Copyright (C) Ing Martin P Cristia
+'
+' This program is free software; you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation; either version 2 of the License, or
+' (at your option) any later version.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program; if not, write to the Free Software
+' Foundation, Inc., 51 Franklin St, Fifth Floor, 
+' Boston, MA  02110-1301  USA
+'
+
+Public SeEliminaran As Integer
+Public Agregados As Integer
+
+Public Sub Form_Open()
+    'pone los titulos a la regilla (nota: es tu tableview para permitir editar los datos)
+    
+    Me.Title = ("Editor de Barras")
+    DefinirgrdEditorBarras()
+    'cargar combobox con opciones...
+    'cargar datos...
+    '
+    
+    'centro el formulario en pantalla
+    Me.Center()
+    ' armo el menu
+    
+    llenartabla    
+    
+End
+
+Public Sub DefinirgrdEditorBarras() 
+    
+    With grdBarras 
+        .header = GridView.Horizontal
+        .rows.count = modEstru.datos.totalbarras
+        .columns.count = 9
+        .Columns[0].title = ("Barra") 
+        .Columns[1].title = ("Inic") 
+        .Columns[2].title = ("Final") 
+        .Columns[3].title = ("Seccion") 
+        .Columns[4].title = ("Material")
+        .Columns[5].title = ("Extremos")
+        .Columns[6].title = ("Grupo") 
+        .Columns[7].title = ("Sector")
+        .Columns[8].title = ("Tipo")
+        
+        .Columns[0].width = 50 
+        .Columns[1].width = 60 
+        .Columns[2].width = 60 
+        .Columns[3].width = 180 
+        .Columns[4].width = 180 
+        .Columns[5].width = 120 
+        .Columns[6].width = 80 
+        .Columns[7].width = 80
+        .Columns[8].width = 120
+        
+        '.font.name = "Times" 
+        '.font.size = 9 
+        '.Background = 16777215 
+        '.Foreground = 0 
+    End With 
+    
+    cmbFiltroTipo.Add("Colummna")
+    cmbFiltroTipo.Add("Colummna")
+    cmbFiltroTipo.Add("Colummna")
+    cmbFiltroTipo.Add("Colummna")
+    
+    
+End 
+
+Public Sub btnAdd_Click()
+    
+    'añadir linea en tableview,para que pueda describir otra barra
+    Agregados += 1
+    grdBarras.Cancel
+    grdBarras.Rows.Count += 1
+    If grdBarras.Rows.Count > 1 Then
+        grdBarras[grdBarras.Rows.Max, 0].Text = Str$(CInt(grdBarras[grdBarras.Rows.Max - 1, 0].Text) + 1)
+        
+    Else 
+        grdBarras[grdBarras.Rows.Max, 0].Text = "1"
+    Endif
+    
+End
+
+Public Sub btnRemove_Click()
+    
+    'borra la linea del tableview donde se encuentra el cursor
+    '
+    '
+    Dim n As Integer
+    
+    grdBarras.Cancel
+    If grdBarras.Row < 0 Then Return
+    n = Val(grdBarras[grdBarras.Row, 0].Text)
+    
+    If n <= modestru.datos.totalbarras Then
+        SeEliminaran = True
+        modestru.barra[n].seleccionado = True
+        grdBarras.Rows.remove(grdBarras.Row)
+    Else
+        grdBarras.Rows.Remove(grdBarras.Row)
+    End If
+    
+End
+
+Public Sub btnOK_Click()
+    
+    'salir del formulario, aceptando cambios
+    Dim a As Integer, n As Integer, pos As Integer, mate As Integer, sec As Integer
+    Dim b As Integer
+    
+    grdBarras.Cancel
+    ' primero modifico cambios
+    For a = 0 To grdBarras.Rows.Max
+        ' corrijo algo que me ahorra problemas
+        For b = 1 To grdBarras.Columns.Max
+            If grdBarras[a, b].Text = "" Then grdBarras[a, b].Text = "0"
+        Next
+        n = Val(grdBarras[a, 0].Text)
+        If n <= modestru.datos.totalbarras Then
+            modestru.barra[n].ni = CInt(Trim$(grdBarras[a, 1].Text)) ' Cint es medio delicado con los espacios extra
+            modestru.barra[n].nf = CInt(Trim$(grdBarras[a, 2].Text))
+            modestru.barra[n].seccion = CInt(Left(grdBarras[a, 3].Text, 2))
+            modestru.barra[n].material = CInt(Left(grdBarras[a, 4].Text, 2))
+            modestru.barra[n].restriccion = CInt(Left(grdBarras[a, 5].Text, 2))
+                        
+        Endif
+    Next
+    
+    ' ahora elimino 
+    n = modEstru.datos.totalbarras
+    For a = n To 1 Step -1
+        If modestru.barra[a].seleccionado = True Then modestru.EliminarBarra(a) 
+    Next
+    
+    ' ahora agrego
+    pos = modestru.datos.totalbarras 
+    For a = 0 To grdBarras.Rows.Max
+        n = Val(grdBarras[a, 0].Text)
+        If n > modestru.datos.totalbarras Then
+            modestru.AddBarra(CInt(grdBarras[a, 1].Text), CInt(grdBarras[a, 2].Text), CInt(Left(grdBarras[a, 3].Text, 2)), CInt(Left(grdBarras[a, 4].Text, 2)))
+        Endif
+    Next
+    
+    modestru.flags.cambios = True
+    
+    Me.Close
+    
+End
+
+Public Sub btnCancel_Click()
+    
+    'salir del formulario, sin aceptar cambios
+    grdBarras.Cancel
+    
+    Me.Close
+    
+End
+
+Sub llenartabla()
+    
+    Dim a As Integer
+    
+    With modestru
+        For a = 1 To .datos.totalbarras
+            grdBarras[a - 1, 0].Text = Format$(a, "0")
+            grdBarras[a - 1, 1].Text = CStr(.barra[a].ni) '& " " 
+            grdBarras[a - 1, 2].Text = CStr(.barra[a].nf) '& " "
+            grdBarras[a - 1, 3].Text = Format$(.barra[a].seccion, "00") & "-" & .secciones[.barra[a].seccion].nombre
+            grdBarras[a - 1, 4].Text = Format$(.barra[a].material, "00") & "-" & .material[.barra[a].material].nombre
+            grdBarras[a - 1, 5].Text = Format$(.barra[a].restriccion, "00") & " " & .extremos[.barra[a].restriccion]
+            grdBarras[a - 1, 6].Text = CStr(.barra[a].grupo)
+            grdBarras[a - 1, 7].Text = CStr(.barra[a].sector)
+            Select Case .barra[a].tipo
+                Case .tipo_columna
+                    grdBarras[a - 1, 8].Text = ("Columna")
+                Case .tipo_losa
+                    grdBarras[a - 1, 8].Text = ("Losa")
+                Case .tipo_viga
+                    grdBarras[a - 1, 8].Text = ("Viga")
+                Case .tipo_tabique
+                    grdBarras[a - 1, 8].Text = ("Tabique")
+                Case .tipo_indef
+                    grdBarras[a - 1, 8].Text = ("Barra")
+            End Select
+'            grdBarras[a - 1, 8].Text = CStr(.barra[a].tipo)
+            
+            ' de paso acomodo
+            grdBarras[a - 1, 0].Alignment = Align.Center
+            grdBarras[a - 1, 1].Alignment = Align.Right
+            grdBarras[a - 1, 2].Alignment = Align.Right
+            grdBarras[a - 1, 3].Alignment = Align.Left
+            grdBarras[a - 1, 4].Alignment = Align.Left
+            grdBarras[a - 1, 5].Alignment = Align.Left
+            grdBarras[a - 1, 6].Alignment = Align.Left
+            grdBarras[a - 1, 7].Alignment = Align.Left
+            
+        Next
+        ' lleno los combos
+        For a = 1 To .datos.totalsecciones
+            cmbSelSeccion.Add(Format$(a, "00") & "-" & .secciones[a].nombre)
+        Next
+        For a = 1 To 20
+            cmbSelMaterial.Add(Format$(a, "00") & "-" & .material[a].nombre)
+        Next 
+        
+         For a = 0 To 4
+            cmbSelExtremos.Add(Format$(a, "00") & "-" & .extremos[a])
+        Next 
+        
+        cmbSelExtremos.Index = 0
+        cmbSelMaterial.Index = 0
+        cmbSelSeccion.Index = 0
+        
+        
+    End With     
+    
+End
+
+Public Sub grdBarras_ColumnClick(col As Integer)
+    
+    Dim a As Integer
+    If col = 0 Then 'selecciono todo
+    
+        grdBarras.Select(0, grdBarras.Rows.Max)
+        
+        
+        
+    Endif
+    If col = 3 Then
+        modestru.flags.seccion = -1
+        formTablaSecc.ShowModal
+        If modestru.flags.seccion > 0 Then
+            For a = 0 To grdBarras.Rows.Max
+                grdBarras[a, 3].Text = Format$(modestru.flags.seccion, "00") & "-" & modestru.secciones[modestru.flags.seccion].nombre
+            Next
+        Endif
+        
+    End If
+     If col = 4 Then ' elijo  material para todas las barras de la tabla
+        modestru.flags.material = -1
+        formMateriales.ShowModal
+        If modestru.flags.material > 0 Then
+            For a = 0 To grdBarras.Rows.Max
+                grdBarras[a, 4].Text = Format$(modestru.flags.material, "00") & "-" & modestru.material[modestru.flags.material].nombre
+            Next
+        Endif
+        
+    End If
+    
+End
+
+Public Sub grdBarras_dblClick()
+    
+    Select Case grdBarras.Column
+        Case 0 ' no puedo ediitar esto
+            
+        Case 1, 2
+            grdBarras.Edit
+        Case 3
+            
+            cmbSelSeccion.Index = 0
+            grdBarras.EditWith(cmbSelSeccion)
+        Case 4
+            cmbSelMaterial.Index = 0
+            grdBarras.EditWith(cmbSelMaterial)
+        Case 5
+            cmbSelExtremos.Index = 0 'grdBarras[grdBarras.row,grdBarras.Column].Text
+            grdBarras.EditWith(cmbSelExtremos)
+          
+    End Select
+    
+End
+
+Public Sub grdBarras_Save(fila As Integer, columna As Integer, valor As String)
+    
+    Dim s As String[], x As Float, y As Float, z As Float, n As Integer
+    If (cmbSelSeccion.Index < 0) And (columna > 2) Then Return
+    Select Case columna
+        Case 1, 2
+            s = Split(valor, ";")
+            If s.Count = 1 Then grdBarras[fila, columna].Text = CStr(valor) ' & " " 
+            If s.count > 1 Then
+                x = 0
+                y = 0
+                z = 0
+                Try x = Val(s[0])
+                Try y = Val(s[1])
+                Try z = Val(s[2]) ' porque no es obligatorio
+                n = modestru.AddNudo(x, y, z, True)
+                grdBarras[fila, columna].Text = CStr(n) ' & " " 
+            Endif
+        Case 3
+            grdBarras[fila, columna].Text = cmbSelSeccion[cmbSelSeccion.Index].Text
+            
+        Case 4
+            grdBarras[fila, columna].Text = cmbSelMaterial[cmbSelMaterial.Index].Text
+        Case 5
+            grdBarras[fila, columna].Text = cmbSelExtremos[cmbSelExtremos.Index].Text
+           
+    End Select
+    
+End
+
+
+Public Sub grdBarras_Click()
+
+    grdBarras_dblClick
+
+End
+
+Public Sub cmbSelExtremos_Click()
+
+     Try grdBarras[grdBarras.Row, grdBarras.Column].Text = cmbSelExtremos[cmbSelExtremos.Index].Text
+
+End
+
+Public Sub cmbSelMaterial_Click()
+
+    Try grdBarras[grdBarras.Row, grdBarras.Column].Text = cmbSelMaterial[cmbSelMaterial.Index].Text
+
+End
+
+Public Sub cmbSelSeccion_Click()
+
+     Try grdBarras[grdBarras.Row, grdBarras.Column].Text = cmbSelSeccion[cmbSelSeccion.Index].Text
+
+End
+
+Public Sub btnAplicar_Click()
+
+    
+
+End
+
+Public Sub cmbFiltroGrupo_Click()
+
+    
+
+End

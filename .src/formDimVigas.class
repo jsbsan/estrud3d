@@ -1,0 +1,176 @@
+' Gambas class file
+
+
+Public tblTexto As String
+Public tblTextoAnterior As String
+Public editando As Boolean
+Public tblRow As Integer
+Public tblCol As Integer
+
+Public Sub Form_Open()
+
+    ' lleno las tablas
+
+    Dim a As Integer
+
+    tblVigas.Rows.Count = 10 ' ponele
+    
+    tblVigas.Columns.Count = 8
+    
+    
+    tblVigas.Header = GridView.Both
+    
+    tblVigas.Rows[0].Title = ""
+    tblVigas.Columns[0].Title = "Lx"
+    tblVigas.Columns[1].Title = "Ly"
+    tblVigas.Columns[2].Title = "g"
+    tblVigas.Columns[3].Title = "p"
+    tblVigas.Columns[4].Title = "q"
+    tblVigas.Columns[5].Title = ""
+    tblVigas.Columns[6].Title = "g"
+    tblVigas.Columns[7].Title = "q"
+    
+
+    tblVigas.Columns[0].Alignment = Align.Right
+    tblVigas.Columns[1].Alignment = Align.Right
+    tblVigas.Columns[2].Alignment = Align.Right
+    tblVigas.Columns[3].Alignment = Align.Right
+
+    'llenartabla
+      
+End
+
+Public Sub form_Resize()
+    
+  tblVigas.top = 10
+  tblVigas.Left = 10
+  tblVigas.Height = btnSalir.top - tblVigas.top * 2
+  tblVigas.Width = Me.Width - tblVigas.Left * 2
+  
+  
+    
+End
+
+
+Public Sub tblVigas_KeyPress()
+    
+    
+    ' If editando Then ' no es la primer tecla
+    ' 
+         If InStr("1234567890.,", Left$(Key.text)) > 0 Then ' es una tecla valida
+            tblVigas.EditWith(ValueBox1)
+            ValueBox1.Text = Key.Text
+        End If
+    
+    '         tblTexto &= Key.Text
+    '         tblVigas[tblVigas.Row, tblVigas.Column].Text = tblTexto
+    '     Else If Key.Code = Key.Enter Or Key.Code = Key.Down Or Key.code = Key.Return Then 'termino la edicion y bajo
+    '         tblVigas[tblVigas.Row, tblVigas.Column].Text = Format$(modUtils.CPval(tblTexto), modEstru.setting.formato_datos)
+    '         If Key.code <> Key.Down Then tblVigas.Row += 1
+    '         editando = False
+    '     Else If Key.Code = Key.Left Then 'termino la edicion y corro
+    '         tblVigas[tblVigas.Row, tblVigas.Column].Text = Format$(modUtils.CPval(tblTexto), modEstru.setting.formato_datos)
+    '         'tblVigas.Column -= 1
+    '         editando = False
+    '     Else If Key.Code = Key.Right Then 'termino la edicion y corro
+    '         tblVigas[tblVigas.Row, tblVigas.Column].Text = Format$(modUtils.CPval(tblTexto), modEstru.setting.formato_datos)
+    '         'tblVigas.Column += 1
+    '         editando = False
+    '     Else If Key.Code = Key.up Then 'termino la edicion y corro
+    '         tblVigas[tblVigas.Row, tblVigas.Column].Text = Format$(modUtils.CPval(tblTexto), modEstru.setting.formato_datos)
+    '         'tblVigas.Column += 1
+    '         editando = False
+    '     Else If Key.Code = Key.Esc Then 'termino la edicion y corro
+    '         tblVigas[tblVigas.Row, tblVigas.Column].Text = tblTextoAnterior
+    '         editando = False
+    '     End If
+    ' 
+    ' Else
+    ' 
+    '     If InStr("1234567890.,", Left$(Key.text)) > 0 Then ' es una tecla valida
+    ' 
+    '         editando = True
+    '         tblTexto = ""
+    '         tblTextoAnterior = tblVigas[tblVigas.Row, tblVigas.Column].Text
+    '         tblTexto = Key.Text
+    '         tblVigas[tblVigas.Row, tblVigas.Column].Text = tblTexto
+    ' 
+    '         tblCol = tblVigas.Column
+    '         tblRow = tblVigas.Row
+    ' 
+    '     End If
+    ' 
+    ' Endif
+
+End
+
+Public Sub tblVigas_Click()
+
+End
+
+Public Sub tblVigas_Save(f As Integer, col As Integer, d As String)
+
+    tblVigas[f, col].Text = d
+
+    
+
+End
+
+Public Sub btnSalir_Click()
+
+    Me.Close(0)
+
+End
+
+Sub llenartabla()
+    
+  
+  Dim n As Integer
+  
+  With modEstru
+      
+  
+    tblVigas.Rows.Count = .Vigas.Count
+  
+    For n = 0 To .Vigas.Max
+  
+        tblVigas[n, 0].Text = .Vigas[n].nombre
+        tblVigas[n, 1].text = .Vigas[n].l
+        
+    
+    Next
+    
+    
+  End With
+    
+End
+
+
+Public Sub ValueBox1_KeyPress()
+    
+    
+End
+
+
+
+Public Sub ValueBox1_KeyRelease()
+    If Key.Code = Key.Up Then
+        tblVigas_Save(tblVigas.Row, tblVigas.Column, ValueBox1.Text)
+        Try tblVigas.Row -= 1
+    
+    Else If Key.Code = Key.Down Or Key.code = Key.Enter Or Key.code = Key.Return Then
+        tblVigas_Save(tblVigas.Row, tblVigas.Column, ValueBox1.Text)
+        Try tblVigas.Row += 1
+    Else If Key.Code = Key.Left Then
+        tblVigas_Save(tblVigas.Row, tblVigas.Column, ValueBox1.Text)
+        Try tblVigas.Column -= 1
+    
+    Else If Key.Code = Key.Right Then
+        tblVigas_Save(tblVigas.Row, tblVigas.Column, ValueBox1.Text)
+        Try tblVigas.Column += 1
+       
+    
+    Endif
+    
+
+End

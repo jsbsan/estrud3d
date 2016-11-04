@@ -1,0 +1,1358 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,138,87)
+  Tracking = True
+  Icon = Picture["imagenes/puente.png"]
+  Arrangement = Arrange.Vertical
+  { mnuProyecto Menu
+    Text = ("Proyecto")
+    { mnuProyectoNuevo Menu
+      Action = "nuevoproyecto"
+      Text = ("Nuevo")
+      Picture = Picture["iconos/tbBasica/New.png"]
+      Shortcut = "Alt+N"
+    }
+    { mnuNuevoMod Menu
+      Action = "nuevodesdemodelo"
+      Text = ("Nuevo desde Modelos")
+      Enabled = False
+    }
+    { mnuProyectoAbrir Menu
+      Action = "abrirproyecto"
+      Text = ("Abrir") & "..."
+      Picture = Picture["iconos/tbBasica/Open.png"]
+      Shortcut = "Alt+A"
+    }
+    { mnuProyectoGuardar Menu
+      Action = "guardarproyecto"
+      Text = ("Guardar")
+      Picture = Picture["iconos/tbBasica/Save.png"]
+      Shortcut = "Alt+G"
+    }
+    { mnuGuardarcomo Menu
+      Action = "guardarcomo"
+      Text = ("Guardar como") & "..."
+      Picture = Picture["iconos/tbBasica/Save.png"]
+    }
+    { mnuGuardargrafico Menu
+      Action = "guardargrafico"
+      Text = ("Guardar gráfico")
+    }
+    { sep1 Menu
+    }
+    { mnuImportar Menu
+      Text = ("Importar")
+      Enabled = False
+      { mnuImportarDXF Menu
+        Action = "importardxf"
+        Text = ("Archivos DXF")
+      }
+      { mnuImportarNudos Menu
+        Action = "importarnudos"
+        Text = ("Archivos de Nudos")
+      }
+      { mnuImportarConn Menu
+        Action = "importarconectividades"
+        Text = ("Archivos de Conectividades")
+      }
+    }
+    { sep2 Menu
+    }
+    { mnuOpciones Menu
+      Action = "opciones"
+      Text = ("Opciones")
+      Picture = Picture["icon:/22/options"]
+      Shortcut = "Ctrl+O"
+    }
+    { sep3 Menu
+    }
+    { mnuReciente1 Menu
+      #Translate = False
+      Visible = False
+    }
+    { mnuReciente2 Menu
+      #Translate = False
+      Visible = False
+    }
+    { mnuReciente3 Menu
+      #Translate = False
+      Visible = False
+    }
+    { mnuReciente4 Menu
+      #Translate = False
+      Visible = False
+    }
+    { mnuReciente5 Menu
+      #Translate = False
+      Visible = False
+    }
+    { sep4 Menu
+      #Translate = False
+    }
+    { mnuProyectoSalir Menu
+      Action = "salir"
+      Text = ("Salir")
+      Picture = Picture["icon:/16/delete"]
+      Shortcut = "Ctrl+X"
+    }
+  }
+  { mnuVer Menu
+    Text = ("Ver")
+    { mnuGraficar Menu
+      Text = ("Graficar")
+      Shortcut = "Ctrl+V"
+    }
+    { mnuVista Menu
+      Text = ("Vista")
+      { mnuVFrontal Menu
+        Action = "vfrontal"
+        Text = ("Frontal")
+        Shortcut = "F5"
+      }
+      { mnuVSuperior Menu
+        Action = "vsuperior"
+        Text = ("Superior")
+        Shortcut = "F6"
+      }
+      { mnuVLateral Menu
+        Action = "vlateral"
+        Text = ("Lateral")
+        Shortcut = "F7"
+      }
+      { mnuVCaballera Menu
+        Action = "vcaballera"
+        Text = ("Perspectiva Caballera")
+        Shortcut = "F8"
+      }
+      { mnuVIsometrica Menu
+        Action = "visometrica"
+        Text = ("Perspectiva Isométrica")
+        Shortcut = "F9"
+      }
+      { sep5 Menu
+        Enabled = False
+        Visible = False
+      }
+      { mnuFiltroSector Menu
+        Action = "filtrosector"
+        Text = ("Filtro de Sector") & "..."
+        Enabled = False
+        Visible = False
+      }
+    }
+    { mnuZoom Menu
+      Action = "zoom"
+      Text = ("Zoom")
+      Enabled = False
+      Visible = False
+      Shortcut = "Ctrl+Z"
+    }
+    { mnuIncluir Menu
+      Text = ("Incluir en el gráfico")
+      { mnuVerEjes Menu
+        Action = "verejes"
+        Text = ("Ejes")
+        Toggle = True
+        Checked = True
+      }
+      { mnuVerApoyos Menu
+        Action = "verapoyos"
+        Text = ("Apoyos")
+        Toggle = True
+        Checked = True
+      }
+      { mnuVerNudos Menu
+        Action = "vernudos"
+        Text = ("Nudos")
+        Toggle = True
+        Shortcut = "F2"
+      }
+      { mnuVerBarras Menu
+        Action = "verbarras"
+        Text = ("Barras")
+        Toggle = True
+        Shortcut = "F3"
+      }
+      { mnuVerCargas Menu
+        Action = "vercargas"
+        Text = ("Cargas")
+        Toggle = True
+        Shortcut = "F4"
+      }
+    }
+    { mnuVerDesplazNudos Menu
+      Action = "desplazamientos"
+      Text = ("Desplazamiento Nudos")
+      Shortcut = "Ctrl+N"
+    }
+    { mnuVerEsfuerzosBarra Menu
+      Action = "esfuerzosbarras"
+      Text = ("Esfuerzos en barra")
+      Shortcut = "Ctrl+B"
+    }
+    { mnuVerDiagramas Menu
+      Action = "verdiagramas"
+      Text = ("Diagramas")
+      Shortcut = "Ctrl+D"
+    }
+    { mnuVerDiagramasEnv Menu
+      Action = "verdiagramasenvolventes"
+      Text = ("Diagramas envolventes")
+      Shortcut = "Ctrl+K"
+    }
+    { mnuVerReacciones Menu
+      Action = "reacciones"
+      Text = ("Reacciones en apoyos")
+      Shortcut = "Ctrl+R"
+    }
+  }
+  { mnuCalculos Menu
+    Text = ("Cálculos")
+    { mnuCalcular Menu
+      Action = "calcularproyecto"
+      Text = ("Calcular")
+      Shortcut = "Shift+C"
+    }
+    { mnuCalculoPlastico Menu
+      Action = "calculoplastico"
+      Text = ("Cálculo plástico")
+      Enabled = False
+      Visible = False
+      Shortcut = "Ctrl+Shift+C"
+    }
+    { mnuCalculoCompleto Menu
+      Text = ("Calculo completo")
+    }
+    { sep7 Menu
+    }
+    { mnuEnvolventes Menu
+      Action = "envolventes"
+      Text = ("Envolventes y tren de cargas")
+    }
+    { sep32 Menu
+    }
+    { mnuSismo Menu
+      Action = "sismo"
+      Text = ("Sismo")
+      Enabled = False
+      Visible = False
+    }
+    { sep8 Menu
+      Enabled = False
+      Visible = False
+    }
+    { mnuEstadoCarga Menu
+      Text = ("Estado de carga: Estado 1")
+      { mnuNombrarEstado Menu
+        Action = "nombrarestado"
+        Text = ("Nombrar estado actual")
+      }
+      { sep9 Menu
+      }
+      { mnuEstado01 Menu estados
+        Name = "mnuEstado01"
+        Text = ("1-Estado 1")
+      }
+      { mnuEstado02 Menu estados
+        Name = "mnuEstado02"
+        Text = ("1-Viento")
+      }
+      { mnuEstado03 Menu estados
+        Name = "mnuEstado03"
+        Text = ("3-Accidental")
+      }
+      { mnuEstado04 Menu estados
+        Name = "mnuEstado04"
+        Text = ("Estado 4")
+      }
+      { mnuEstado05 Menu estados
+        Name = "mnuEstado05"
+        Text = ("Menu1")
+      }
+      { mnuEstado06 Menu estados
+        Name = "mnuEstado06"
+        Text = ("Menu2")
+      }
+      { mnuEstado07 Menu estados
+        Name = "mnuEstado07"
+        Text = ("Menu3")
+      }
+      { mnuEstado08 Menu estados
+        Name = "mnuEstado08"
+        Text = ("Menu4")
+      }
+      { mnuEstado09 Menu estados
+        Name = "mnuEstado09"
+        Text = ("Menu5")
+      }
+      { mnuEstado10 Menu estados
+        Name = "mnuEstado10"
+        Text = ("Menu6")
+      }
+      { Menu1 Menu
+        Enabled = False
+      }
+      { mnuComb01 Menu combinaciones
+        Name = "mnuComb01"
+        Text = ("Combinacion 1")
+      }
+      { mnuComb02 Menu combinaciones
+        Name = "mnuComb02"
+        Text = ("Combinacion 2")
+      }
+      { mnuComb03 Menu combinaciones
+        Name = "mnuComb03"
+        Text = ("Combinacion 3")
+      }
+      { mnuComb04 Menu combinaciones
+        Name = "mnuComb04"
+        Text = ("Combinacion 4")
+      }
+      { mnuComb05 Menu combinaciones
+        Name = "mnuComb05"
+        Text = ("Combinacion 5")
+      }
+      { mnuComb06 Menu combinaciones
+        Name = "mnuComb06"
+        Text = ("Combinacion 6")
+      }
+      { mnuComb07 Menu combinaciones
+        Name = "mnuComb07"
+        Text = ("Combinacion 7")
+      }
+      { mnuComb08 Menu combinaciones
+        Name = "mnuComb08"
+        Text = ("Combinacion 8")
+      }
+      { mnuComb09 Menu combinaciones
+        Name = "mnuComb09"
+        Text = ("Combinacion 9")
+      }
+      { mnuComb10 Menu combinaciones
+        Name = "mnuComb10"
+        Text = ("Combinacion 10")
+      }
+    }
+    { mnuDefCombinaciones Menu
+      Action = "definircombinaciones"
+      Text = ("Definir combinaciones")
+    }
+    { mnuVerMatrizRigidez Menu
+      Action = "vermatrizrigidez"
+      Text = ("Ver matriz de rigidez")
+    }
+  }
+  { mnuEstructura Menu
+    Text = ("Estructura")
+    { mnuEstructInfo Menu
+      Action = "estructinfo"
+      Text = ("Información")
+      Shortcut = "F12"
+    }
+    { sep10 Menu
+    }
+    { mnuTablaNudos Menu
+      Action = "tablanudos"
+      Text = ("Tabla de nudos")
+      Shortcut = "Alt+F2"
+    }
+    { mnuTablaBarras Menu
+      Action = "tablabarras"
+      Text = ("Tabla de barras")
+      Shortcut = "Alt+F3"
+    }
+    { mnuCargaNudos Menu
+      Action = "carganudos"
+      Text = ("Cargas en nudo")
+      Shortcut = "Alt+F4"
+    }
+    { mnuCargaBarras Menu
+      Action = "cargabarras"
+      Text = ("Cargas en barra")
+      Shortcut = "Alt+F5"
+    }
+    { mnuTren Menu
+      Action = "tren"
+      Text = ("Tren de Cargas")
+    }
+    { mnuApoyos Menu
+      Action = "apoyos"
+      Text = ("Apoyos")
+      Shortcut = "Alt+F6"
+    }
+    { mnuTablaSecciones Menu
+      Action = "tablasecciones"
+      Text = ("Tabla de secciones")
+      Shortcut = "Alt+F9"
+    }
+  }
+  { mnuDesign Menu
+    Text = ("Diseño")
+    { mnuPlantas Menu
+      Text = ("Plantas")
+    }
+    { separator65 Menu
+    }
+    { mnuEstBases Menu
+      Text = ("Bases")
+    }
+    { mnuEstColumnas Menu
+      Text = ("Columnas")
+    }
+    { mnuTabiques Menu
+      Text = ("Tabiques")
+    }
+    { mnuEstVigas Menu
+      Text = ("Vigas")
+    }
+    { mnuEstLosas Menu
+      Text = ("Losas")
+    }
+  }
+  { mnuLib Menu
+    Text = ("Librería")
+    { mnuMateriales Menu
+      Action = "materiales"
+      Text = ("Materiales")
+      Shortcut = "Ctrl+M"
+    }
+    { sep11 Menu
+    }
+    { mnuSecciones Menu
+      Action = "seccionesgeometricas"
+      Text = ("Secciones geométricas")
+      Shortcut = "Alt+F7"
+    }
+    { mnuPerfiles Menu
+      Action = "tablaPerfiles"
+      Text = ("Perfiles normalizados")
+      Shortcut = "Alt+F8"
+    }
+    { mnuTipoSecciones Menu
+      Action = "tiposecciones"
+      Text = ("Tipos de secciones")
+      Enabled = False
+      Visible = False
+      Shortcut = "Alt+F10"
+    }
+  }
+  { mnuAsistente Menu
+    Text = ("Asistente")
+    { mnuAsistenteEstru Menu
+      Action = "asistente_generar"
+      Text = ("Asistente para generar estructuras")
+      Shortcut = "Alt+F1"
+    }
+    { sep12 Menu
+    }
+    { mnuOptimizarNudos Menu
+      Action = "asistente_optimizarnudos"
+      Text = ("Optimizar nudos")
+    }
+    { mnuCorregirNumeracionBarras Menu
+      Text = ("Corregir nudos en barras")
+    }
+    { mnuEliminarNudosDesuso Menu
+      Action = "asistente_eliminarnudosdesuso"
+      Text = ("Eliminar nudos en desuso")
+    }
+    { mnuEliminarBarrasNNV Menu
+      Action = "asistente_eliminarbarrasnnv"
+      Text = ("Eliminar barras con nudos no válidos")
+    }
+    { mnuEliminarNudosDupes Menu
+      Action = "asistente_eliminarnudosdupes"
+      Text = ("Eliminar nudos duplicados")
+    }
+    { mnuEliminarBarrasC Menu
+      Text = ("Eliminar barras coincidentes")
+    }
+    { mnuBarrasColineales Menu
+      Text = ("Reparar barras colineales")
+    }
+    { sep13 Menu
+    }
+    { mnuGenerarPortico Menu
+      Action = "asistente_generarportico"
+      Text = ("Generar pórtico ortogonal")
+    }
+    { mnuGenerarPlantaTipo Menu
+      Text = ("Generar Plantas Tipo")
+    }
+    { mnuVierendel Menu
+      Action = "asistente_vierendel"
+      Text = ("Viga Vierendel")
+      Visible = False
+    }
+    { mnuCercha Menu
+      Action = "asistente_cercha"
+      Text = ("Cercha")
+      Visible = False
+    }
+    { mnuCabreada Menu
+      Action = "asistente_cabreada"
+      Text = ("Cabreada")
+      Visible = False
+    }
+  }
+  { mnuImprimir Menu
+    Text = ("Imprimir")
+    Visible = False
+    { mnuImprimirEstru Menu
+      Action = "imprimirestructura"
+      Text = ("Estructura")
+      Enabled = False
+    }
+    { mnuImprimirDesplzNudos Menu
+      Action = "imprimirdesplznudos"
+      Text = ("Desplazamiento de nudos")
+      Enabled = False
+    }
+    { mnuImprimirEsfuerzosB Menu
+      Action = "imprimiresfuerzosb"
+      Text = ("Esfuerzos en barras")
+      Enabled = False
+    }
+    { mnuResumen Menu
+      Action = "cresumen"
+      Text = ("Cuadro resumen")
+    }
+    { sep6 Menu
+    }
+    { mnuVerImprimir Menu
+      Action = "imprimirgrafico"
+      Text = ("Imprimir gráfico")
+      Enabled = False
+      Shortcut = "Ctrl+P"
+    }
+    { mnuVerCopiargrafico Menu
+      Action = "copiargrafico"
+      Text = ("Copiar gráfico")
+      Enabled = False
+    }
+  }
+  { mnuAyuda Menu
+    Text = ("Ayuda")
+    { mnuVerAyuda Menu
+      Action = "ayuda_ayuda"
+      Text = ("Ayuda")
+      Shortcut = "F1"
+    }
+    { sep14 Menu
+    }
+    { mnuBienvenida Menu
+      Action = "ayuda_bienvenida"
+      Text = ("Bienvenida")
+    }
+    { mnuHowTo Menu
+      Action = "ayuda_uso"
+      Text = ("Cómo utilizar Estru3D")
+    }
+    { mnututorial Menu
+      Text = ("Tutoriales")
+      { mnutut1 Menu
+        Text = ("Tutorial 1 - Viga simple")
+      }
+      { mnuTut2 Menu
+        Text = ("Tutorial 2 - Portico de 3 barras")
+      }
+    }
+    { mnuMetodoRigidez Menu
+      Action = "ayuda_metodo"
+      Text = ("Método de la Rigidez")
+    }
+    { mnuStatus Menu
+      Action = "ayuda_status"
+      Text = ("Status de la estructura")
+    }
+    { mnuSoporteTecnico Menu
+      Action = "ayuda_soporte"
+      Text = ("Soporte Técnico")
+    }
+    { mnuReportarErrores Menu
+      Action = "ayuda_errores"
+      Text = ("Como puedo involucrarme?")
+    }
+    { mnuAcercade Menu
+      Action = "ayuda_acerca"
+      Text = ("Acerca de") & "..."
+    }
+  }
+  { tbBasica ToolBar
+    MoveScaled(0,0,135,4)
+    AutoResize = False
+    Key = "maintb"
+    Text = ("Basica")
+    { btnNew ToolButton
+      MoveScaled(0,0,4,4)
+      ToolTip = ("Crea un nuevo proyecto")
+      Action = "nuevoproyecto"
+      Picture = Picture["iconos/tbBasica/New.png"]
+    }
+    { btnOpen ToolButton
+      MoveScaled(3.375,0,4,4)
+      ToolTip = ("Abre un proyecto")
+      Action = "abrirproyecto"
+      Picture = Picture["iconos/tbBasica/Open.png"]
+    }
+    { btnSave ToolButton
+      MoveScaled(8,0,4,4)
+      ToolTip = ("Guarda el proyecto actual")
+      Action = "guardarproyecto"
+      Picture = Picture["iconos/tbBasica/Save.png"]
+    }
+    { Separator1 Separator
+      MoveScaled(12,0,0.75,4)
+    }
+    { btnPrint ToolButton
+      MoveScaled(13,0,4,4)
+      Enabled = False
+      ToolTip = ("Imprime")
+      Action = "imprimirgrafico"
+      Picture = Picture["iconos/tbBasica/Print.png"]
+    }
+    { btnPrintPreview ToolButton
+      MoveScaled(17,0,4,4)
+      Enabled = False
+      ToolTip = ("Vista previa de impresión")
+      Action = "imprimirprevia"
+      Picture = Picture["iconos/tbBasica/preview_24.png"]
+    }
+    { Separator3 Separator
+      MoveScaled(21,0,0.75,4)
+    }
+    { btnNumeroNudos ToolButton
+      MoveScaled(22,0,4,4)
+      ToolTip = ("Escribir numero de nudos")
+      Action = "vernudos"
+      Picture = Picture["iconos/tbBasica/ver-nudos2.png"]
+      Toggle = True
+      Value = True
+    }
+    { btnNumeroBarras ToolButton
+      MoveScaled(26,0,4,4)
+      ToolTip = ("Escribir numero de barras")
+      Action = "verbarras"
+      Picture = Picture["iconos/tbBasica/ver-barras2.png"]
+      Toggle = True
+      Value = True
+    }
+    { btnGraficarCargas ToolButton
+      MoveScaled(30,0,4,4)
+      ToolTip = ("Graficar las cargas")
+      Action = "vercargas"
+      Picture = Picture["iconos/tbBasica/ver-cargas.png"]
+      Toggle = True
+      Value = True
+    }
+    { Separator4 Separator
+      MoveScaled(34,0,0.75,4)
+    }
+    { btnVerSubelements ToolButton
+      MoveScaled(35,0,4,4)
+      ToolTip = ("Escribir numero de nudos")
+      Text = ("A")
+      Toggle = True
+    }
+    { btnVerWireframe ToolButton
+      MoveScaled(39,0,4,4)
+      ToolTip = ("Escribir numero de barras")
+      Text = ("F")
+      Toggle = True
+    }
+    { btnVerRender ToolButton
+      MoveScaled(43,0,4,4)
+      ToolTip = ("Graficar las cargas")
+      Text = ("T")
+      Toggle = True
+    }
+    { cmbSector ComboBox
+      MoveScaled(48,0,12,4)
+      ReadOnly = True
+    }
+    { Separator14 Separator
+      MoveScaled(60,0,0.75,4)
+    }
+    { btnRedraw ToolButton
+      MoveScaled(60,0,4,4)
+      ToolTip = ("Ver toda la estructura")
+      Picture = Picture["iconos/tbBasica/zoom-all.png"]
+    }
+    { btnVentanaZoom ToolButton
+      MoveScaled(63,0,4,4)
+      Enabled = False
+      ToolTip = ("Ventana de zoom")
+      Action = "vzoom"
+      Picture = Picture["iconos/tbBasica/zoom-window.png"]
+    }
+    { btnPaneo ToolButton
+      MoveScaled(66,0,4,4)
+      ToolTip = ("Paneo")
+      Action = "paneo"
+      Picture = Picture["iconos/tbBasica/pan.png"]
+      Toggle = True
+    }
+    { btnRotar ToolButton
+      MoveScaled(70,0,4,4)
+      ToolTip = ("Rotar")
+      Action = "rotar"
+      Picture = Picture["iconos/tbBasica/zoom-rotar.png"]
+      Toggle = True
+      Value = True
+    }
+    { Separator15 Separator
+      MoveScaled(73,0,0.75,4)
+    }
+    { btnPlanoXY ToolButton
+      MoveScaled(74,0,4,4)
+      ToolTip = ("Ver plano X-Y")
+      Action = "vfrontal"
+      Picture = Picture["iconos/tbBasica/vista-XY.png"]
+    }
+    { btnPlanoXZ ToolButton
+      MoveScaled(78,0,4,4)
+      ToolTip = ("Ver Plano X-Z")
+      Action = "vsuperior"
+      Picture = Picture["iconos/tbBasica/vista-XZ.png"]
+    }
+    { btnPlanoYZ ToolButton
+      MoveScaled(81,0,4,4)
+      ToolTip = ("Ver plano Y-Z")
+      Action = "vlateral"
+      Picture = Picture["iconos/tbBasica/vista-YZ.png"]
+    }
+    { btnVIsometrica ToolButton
+      MoveScaled(85,0,4,4)
+      ToolTip = ("Vista isométrica")
+      Action = "visometrica"
+      Picture = Picture["iconos/tbBasica/vista-isometrica.png"]
+    }
+    { Separator5 Separator
+      MoveScaled(89,0,0.75,4)
+    }
+    { btnInfo ToolButton
+      MoveScaled(90,0,4,4)
+      ToolTip = ("Información del proyecto")
+      Action = "estructinfo"
+      Picture = Picture["iconos/tbBasica/info.png"]
+    }
+    { btnTablaNudos ToolButton
+      MoveScaled(95,0,4,4)
+      ToolTip = ("Tabla de nudos")
+      Action = "tablanudos"
+      Picture = Picture["iconos/tbBasica/tabla-nudos.png"]
+    }
+    { btnTablaBarras ToolButton
+      MoveScaled(98,0,4,4)
+      ToolTip = ("Tabla de barras")
+      Action = "tablabarras"
+      Picture = Picture["iconos/tbBasica/tabla-barras.png"]
+    }
+    { btnTCargaNudo ToolButton
+      MoveScaled(102,0,4,4)
+      ToolTip = ("Tabla de cargas en nudo")
+      Action = "carganudos"
+      Picture = Picture["iconos/tbBasica/tabla-carganudos.png"]
+    }
+    { btnTCargaBarra ToolButton
+      MoveScaled(106,0,4,4)
+      ToolTip = ("Tabla de cargas en barra")
+      Action = "cargabarras"
+      Picture = Picture["iconos/tbBasica/tabla-cargabarras.png"]
+    }
+    { btnTablaApoyos ToolButton
+      MoveScaled(110,0,4,4)
+      ToolTip = ("Tabla de apoyos")
+      Action = "apoyos"
+      Picture = Picture["iconos/tbBasica/tabla-apoyos.png"]
+    }
+    { btnTablaSecciones ToolButton
+      MoveScaled(114,0,4,4)
+      ToolTip = ("Tabla de secciones")
+      Action = "tablasecciones"
+      Picture = Picture["iconos/tbBasica/tabla-secciones.png"]
+    }
+    { btnTablaMateriales ToolButton
+      MoveScaled(118,0,4,4)
+      ToolTip = ("Tabla de materiales")
+      Action = "materiales"
+      Picture = Picture["iconos/tbBasica/tabla-materiales.png"]
+    }
+    { Separator7 Separator
+      MoveScaled(122,0,0.75,4)
+    }
+    { btnAsistente ToolButton
+      MoveScaled(123,0,4,4)
+      ToolTip = ("Asistente para modelar estructuras")
+      Action = "asistente_generar"
+      Picture = Picture["iconos/tbBasica/asistente.png"]
+    }
+  }
+  { tab TabStrip
+    MoveScaled(6,6,77,70)
+    Expand = True
+    Arrangement = Arrange.Fill
+    AutoResize = True
+    Count = 4
+    Index = 0
+    Text = ("")
+    { Panel2 Panel
+      MoveScaled(2,1,77,39)
+      Expand = True
+      Arrangement = Arrange.Horizontal
+      { VBox2 VBox
+        MoveScaled(3,3,4,24)
+        { tbCalculob ToolBar
+          MoveScaled(0,0,4,62.5)
+          AutoResize = False
+          Orientation = ToolBar.Vertical
+          { btnEsfuerzoNormal ToolButton
+            MoveScaled(0,0,4,4)
+            ToolTip = ("Esfuerzo normal")
+            Action = "esfuerzonormal"
+            Picture = Picture["iconos/tbCalculo/n.png"]
+            Toggle = True
+          }
+          { btnEsfuerzoEjeY ToolButton
+            MoveScaled(0,4,4,4)
+            ToolTip = ("Corte según eje Y")
+            Action = "esfuerzoejey"
+            Picture = Picture["iconos/tbCalculo/qy.png"]
+            Toggle = True
+          }
+          { btnEsfuerzoEjeZ ToolButton
+            MoveScaled(0,8,4,4)
+            ToolTip = ("Corte según eje Z")
+            Action = "esfuerzoejez"
+            Picture = Picture["iconos/tbCalculo/qz2.png"]
+            Toggle = True
+          }
+          { btnEsfuerzoTorsor ToolButton
+            MoveScaled(0,12,4,4)
+            ToolTip = ("Esfuerzo Torsor")
+            Action = "esfuerzotorsor"
+            Picture = Picture["iconos/tbCalculo/t3.png"]
+            Toggle = True
+          }
+          { Separator12 Separator
+            MoveScaled(0,16,3,1)
+          }
+          { btnMomentoEjeY ToolButton
+            MoveScaled(0,17,4,4)
+            ToolTip = ("Momento según eje Y")
+            Action = "momentoejey"
+            Picture = Picture["iconos/tbCalculo/my4.png"]
+            Toggle = True
+          }
+          { btnMomentoEjeZ ToolButton
+            MoveScaled(0,21,4,4)
+            ToolTip = ("Momento según eje Z")
+            Action = "momentoejez"
+            Picture = Picture["iconos/tbCalculo/mz2.png"]
+            Toggle = True
+          }
+          { btnElastica ToolButton
+            MoveScaled(0,25,4,4)
+            ToolTip = ("Elástica")
+            Action = "elastica"
+            Picture = Picture["iconos/tbCalculo/elastica1.png"]
+            Toggle = True
+          }
+          { btnTensionSigma ToolButton
+            MoveScaled(0,29,4,4)
+            Enabled = False
+            ToolTip = ("Tensiones máximas normales")
+            Action = "tensionsigma"
+            Picture = Picture["iconos/tbCalculo/tensiones.png"]
+          }
+          { btnTensionTau ToolButton
+            MoveScaled(0,33,4,4)
+            Enabled = False
+            ToolTip = ("Tensiones de corte máximas")
+            Action = "tensiontau"
+            Picture = Picture["iconos/tbCalculo/tau.png"]
+          }
+          { btnAprovechamiento ToolButton
+            MoveScaled(0,37,4,4)
+            Enabled = False
+            ToolTip = ("Aprovechamiento de la sección")
+            Action = "aprovechamiento"
+            Picture = Picture["iconos/tbCalculo/aprovecham.png"]
+          }
+          { Separator13 Separator
+            MoveScaled(0,41,3,1)
+          }
+          { btnAumentarEscala ToolButton
+            MoveScaled(0,42,4,4)
+            ToolTip = ("Aumentar la escala")
+            Action = "aumentarescala"
+            Picture = Picture["iconos/tbCalculo/zoom+.png"]
+          }
+          { btnReducirEscala ToolButton
+            MoveScaled(0,46,4,4)
+            ToolTip = ("Reducir la escala")
+            Action = "reducirescala"
+            Picture = Picture["iconos/tbCalculo/zoom-.png"]
+          }
+        }
+      }
+      { !gestru GLArea
+        MoveScaled(11,4,56,24)
+        #Public = True
+        Background = Color.White
+        Expand = True
+      }
+    }
+    Index = 1
+    Text = ("")
+    { Panel1 Panel
+      MoveScaled(26,5,24,24)
+      Arrangement = Arrange.Fill
+      { txtDebug TextArea
+        MoveScaled(0,0,16,16)
+        Background = Color.Black
+        Foreground = Color.White
+        Expand = True
+      }
+    }
+    Index = 2
+    Text = ("")
+    { wBrowser WebView
+      MoveScaled(0,0,60,30)
+      Background = Color.Yellow
+      Expand = True
+    }
+    Index = 3
+    Text = ("")
+    { webYoutube WebView
+      MoveScaled(14,6,23,19)
+      Background = Color.Blue
+      Foreground = Color.White
+      Expand = True
+    }
+    Index = 0
+  }
+  { Timer1 #Timer
+    #MoveScaled(132,73)
+    Enabled = True
+  }
+  { HBox1 HBox
+    MoveScaled(3,77,44,3)
+    { txtCmd TextBox
+      MoveScaled(14,-1,24,5)
+      Background = Color.Black
+      Foreground = Color.White
+      Expand = True
+      Text = (">")
+      Border = False
+    }
+  }
+  { HBoxEstado HBox
+    MoveScaled(3,80,130,3)
+    { lblAyudaRapida Label
+      MoveScaled(1,0,57,3)
+      Expand = True
+      Border = Border.Etched
+    }
+    { lblUnidades Label
+      MoveScaled(59,0,20,3)
+      Text = ("Ton - Met - Rad")
+      Alignment = Align.Center
+      Border = Border.Etched
+    }
+    { lblEstadoCarga Label
+      MoveScaled(79,0,24,3)
+      Visible = False
+      Border = Border.Etched
+    }
+    { lblModo Label
+      MoveScaled(104,0,24,3)
+      Border = Border.Etched
+    }
+    { cmbEstado ComboBox
+      MoveScaled(79,0,24,3)
+      ReadOnly = True
+    }
+  }
+}
+
+# Gambas Action File 3.0
+
+{ Actions
+  { Action abrirproyecto
+    Text = "Abrir"
+    Shortcut = "Alt+A"
+    Picture = "iconos/tbBasica/Open.png"
+  }
+  { Action apoyos
+    Text = "Apoyos"
+    Shortcut = "Alt+F6"
+    Picture = "iconos/tbBasica/tabla-apoyos.png"
+  }
+  { Action aprovechamiento
+    Text = "Aprovechamiento de la sección"
+    Picture = "iconos/tbCalculo/aprovecham.png"
+  }
+  { Action asistente_cabreada
+    Text = "Cabreada"
+    Shortcut = ""
+  }
+  { Action asistente_cercha
+    Text = "Cercha"
+    Shortcut = ""
+  }
+  { Action asistente_eliminarbarrasnnv
+    Text = "Eliminar barras con nudos no válidos"
+    Shortcut = ""
+  }
+  { Action asistente_eliminarnudosdesuso
+    Text = "Eliminar nudos en desuso"
+    Shortcut = ""
+  }
+  { Action asistente_eliminarnudosdupes
+    Text = "Eliminar nudos duplicados"
+    Shortcut = ""
+  }
+  { Action asistente_generar
+    Text = "Asistente para generar estructuras"
+    Shortcut = "Alt+F1"
+    Picture = "iconos/tbBasica/asistente.png"
+  }
+  { Action asistente_generarportico
+    Text = "Generar pórtico ortogonal"
+    Shortcut = ""
+  }
+  { Action asistente_optimizarnudos
+    Text = "Optimizar nudos"
+    Shortcut = ""
+  }
+  { Action asistente_vierendel
+    Text = "Viga Vierendel"
+    Shortcut = ""
+  }
+  { Action aumentarescala
+    Text = "Aumentar la escala"
+    Picture = "iconos/tbCalculo/zoom+.png"
+  }
+  { Action ayuda_acerca
+    Text = "Acerca de"
+    Shortcut = ""
+  }
+  { Action ayuda_ayuda
+    Text = "Ayuda"
+    Shortcut = "F1"
+  }
+  { Action ayuda_bienvenida
+    Text = "Bienvenida"
+    Shortcut = ""
+  }
+  { Action ayuda_errores
+    Text = "Como puedo involucrarme?"
+    Shortcut = ""
+  }
+  { Action ayuda_metodo
+    Text = "Método de la Rigidez"
+    Shortcut = ""
+  }
+  { Action ayuda_soporte
+    Text = "Soporte Técnico"
+    Shortcut = ""
+  }
+  { Action ayuda_status
+    Text = "Status de la estructura"
+    Shortcut = ""
+  }
+  { Action ayuda_uso
+    Text = "Cómo utilizar Estru3D"
+    Shortcut = ""
+  }
+  { Action calcularproyecto
+    Text = "Calcular"
+    Shortcut = "Shift+C"
+  }
+  { Action calculoplastico
+    Text = "Cálculo plástico"
+    Shortcut = "Ctrl+Shift+C"
+  }
+  { Action cargabarras
+    Text = "Cargas en barra"
+    Shortcut = "Alt+F5"
+    Picture = "iconos/tbBasica/tabla-cargabarras.png"
+  }
+  { Action carganudos
+    Text = "Cargas en nudo"
+    Shortcut = "Alt+F4"
+    Picture = "iconos/tbBasica/tabla-carganudos.png"
+  }
+  { Action copiargrafico
+    Text = "Copiar gráfico"
+    Shortcut = ""
+  }
+  { Action cresumen
+    Text = "Cuadro resumen"
+    Shortcut = ""
+  }
+  { Action definircombinaciones
+    Text = "Definir combinaciones"
+    Shortcut = ""
+  }
+  { Action desplazamientos
+    Text = "Desplazamiento Nudos"
+    Shortcut = "Ctrl+N"
+  }
+  { Action elastica
+    Text = "Elástica"
+    Picture = "iconos/tbCalculo/elastica1.png"
+  }
+  { Action envolventes
+    Text = "Envolventes y tren de cargas"
+    Shortcut = ""
+  }
+  { Action esfuerzoejey
+    Text = "Corte según eje Y"
+    Picture = "iconos/tbCalculo/qy.png"
+  }
+  { Action esfuerzoejez
+    Text = "Corte según eje Z"
+    Picture = "iconos/tbCalculo/qz2.png"
+  }
+  { Action esfuerzonormal
+    Text = "Esfuerzo normal"
+    Picture = "iconos/tbCalculo/n.png"
+  }
+  { Action esfuerzosbarras
+    Text = "Esfuerzos en barra"
+    Shortcut = "Ctrl+B"
+  }
+  { Action esfuerzotorsor
+    Text = "Esfuerzo Torsor"
+    Picture = "iconos/tbCalculo/t3.png"
+  }
+  { Action estructinfo
+    Text = "Información"
+    Shortcut = "F12"
+    Picture = "iconos/tbBasica/info.png"
+  }
+  { Action filtrosector
+    Text = "Filtro de Sector"
+    Shortcut = ""
+  }
+  { Action guardarcomo
+    Text = "Guardar como"
+    Shortcut = ""
+    Picture = "iconos/tbBasica/Save.png"
+  }
+  { Action guardargrafico
+    Text = "Guardar gráfico"
+    Shortcut = ""
+  }
+  { Action guardarproyecto
+    Text = "Guardar"
+    Shortcut = "Alt+G"
+    Picture = "iconos/tbBasica/Save.png"
+  }
+  { Action importarconectividades
+    Text = "Archivos de Conectividades"
+    Shortcut = ""
+  }
+  { Action importardxf
+    Text = "Archivos DXF"
+    Shortcut = ""
+  }
+  { Action importarnudos
+    Text = "Archivos de Nudos"
+    Shortcut = ""
+  }
+  { Action imprimirdesplznudos
+    Text = "Desplazamiento de nudos"
+    Shortcut = ""
+  }
+  { Action imprimiresfuerzosb
+    Text = "Esfuerzos en barras"
+    Shortcut = ""
+  }
+  { Action imprimirestructura
+    Text = "Estructura"
+    Shortcut = ""
+  }
+  { Action imprimirgrafico
+    Text = "Imprimir gráfico"
+    Shortcut = "Ctrl+P"
+    Picture = "iconos/tbBasica/Print.png"
+  }
+  { Action imprimirprevia
+    Text = "Vista previa de impresión"
+    Picture = "iconos/tbBasica/preview_24.png"
+  }
+  { Action materiales
+    Text = "Materiales"
+    Shortcut = "Ctrl+M"
+    Picture = "iconos/tbBasica/tabla-materiales.png"
+  }
+  { Action momentoejey
+    Text = "Momento según eje Y"
+    Picture = "iconos/tbCalculo/my4.png"
+  }
+  { Action momentoejez
+    Text = "Momento según eje Z"
+    Picture = "iconos/tbCalculo/mz2.png"
+  }
+  { Action nombrarestado
+    Text = "Nombrar estado actual"
+    Shortcut = ""
+  }
+  { Action nuevodesdemodelo
+    Text = "Nuevo desde Modelos"
+    Shortcut = ""
+  }
+  { Action nuevoproyecto
+    Text = "Nuevo"
+    Shortcut = "Alt+N"
+    Picture = "iconos/tbBasica/New.png"
+  }
+  { Action opciones
+    Text = "Opciones"
+    Shortcut = "Ctrl+O"
+    Picture = "icon:/22/options"
+  }
+  { Action paneo
+    Text = "Paneo"
+    Picture = "iconos/tbBasica/pan.png"
+  }
+  { Action reacciones
+    Text = "Reacciones en apoyos"
+    Shortcut = "Ctrl+R"
+  }
+  { Action reducirescala
+    Text = "Reducir la escala"
+    Picture = "iconos/tbCalculo/zoom-.png"
+  }
+  { Action rotar
+    Text = "Rotar"
+    Picture = "iconos/tbBasica/zoom-rotar.png"
+  }
+  { Action salir
+    Text = "Salir"
+    Shortcut = "Ctrl+X"
+    Picture = "icon:/16/delete"
+  }
+  { Action seccionesgeometricas
+    Text = "Secciones geométricas"
+    Shortcut = "Alt+F7"
+  }
+  { Action sismo
+    Text = "Sismo"
+    Shortcut = ""
+  }
+  { Action tablaPerfiles
+    Text = "Perfiles normalizados"
+    Shortcut = "Alt+F8"
+  }
+  { Action tablabarras
+    Text = "Tabla de barras"
+    Shortcut = "Alt+F3"
+    Picture = "iconos/tbBasica/tabla-barras.png"
+  }
+  { Action tablanudos
+    Text = "Tabla de nudos"
+    Shortcut = "Alt+F2"
+    Picture = "iconos/tbBasica/tabla-nudos.png"
+  }
+  { Action tablasecciones
+    Text = "Tabla de secciones"
+    Shortcut = "Alt+F9"
+    Picture = "iconos/tbBasica/tabla-secciones.png"
+  }
+  { Action tensionsigma
+    Text = "Tensiones máximas normales"
+    Picture = "iconos/tbCalculo/tensiones.png"
+  }
+  { Action tensiontau
+    Text = "Tensiones de corte máximas"
+    Picture = "iconos/tbCalculo/tau.png"
+  }
+  { Action tiposecciones
+    Text = "Tipos de secciones"
+    Shortcut = "Alt+F10"
+  }
+  { Action tren
+    Text = "Tren de Cargas"
+    Shortcut = ""
+  }
+  { Action vcaballera
+    Text = "Perspectiva Caballera"
+    Shortcut = "F8"
+  }
+  { Action verapoyos
+    Text = "Apoyos"
+    Shortcut = ""
+  }
+  { Action verbarras
+    Text = "Barras"
+    Shortcut = "F3"
+    Picture = "iconos/tbBasica/ver-barras2.png"
+  }
+  { Action vercargas
+    Text = "Cargas"
+    Shortcut = "F4"
+    Picture = "iconos/tbBasica/ver-cargas.png"
+  }
+  { Action verdiagramas
+    Text = "Diagramas"
+    Shortcut = "Ctrl+D"
+  }
+  { Action verdiagramasenvolventes
+    Text = "Diagramas envolventes"
+    Shortcut = "Ctrl+K"
+  }
+  { Action verejes
+    Text = "Ejes"
+    Shortcut = ""
+  }
+  { Action vermatrizrigidez
+    Text = "Ver matriz de rigidez"
+    Shortcut = ""
+  }
+  { Action vernudos
+    Text = "Nudos"
+    Shortcut = "F2"
+    Picture = "iconos/tbBasica/ver-nudos2.png"
+  }
+  { Action vfrontal
+    Text = "Frontal"
+    Shortcut = "F5"
+    Picture = "iconos/tbBasica/vista-XY.png"
+  }
+  { Action visometrica
+    Text = "Perspectiva Isométrica"
+    Shortcut = "F9"
+    Picture = "iconos/tbBasica/vista-isometrica.png"
+  }
+  { Action vlateral
+    Text = "Lateral"
+    Shortcut = "F7"
+    Picture = "iconos/tbBasica/vista-YZ.png"
+  }
+  { Action vsuperior
+    Text = "Superior"
+    Shortcut = "F6"
+    Picture = "iconos/tbBasica/vista-XZ.png"
+  }
+  { Action vzoom
+    Text = "Ventana de zoom"
+    Picture = "iconos/tbBasica/zoom-window.png"
+  }
+  { Action zoom
+    Text = "Zoom"
+    Shortcut = "Ctrl+Z"
+  }
+}
+
+{ Toolbars
+  { Toolbar maintb
+    Text = "Basica"
+    List = "nuevoproyecto,abrirproyecto,guardarproyecto,imprimirgrafico,imprimirprevia,vernudos,verbarras,vercargas,vzoom,paneo,rotar,vfrontal,vsuperior,vlateral,visometrica,estructinfo,tablanudos,tablabarras,carganudos,cargabarras,apoyos,tablasecciones,materiales,asistente_generar"
+    Default = "nuevoproyecto,abrirproyecto,guardarproyecto,|,imprimirgrafico,imprimirprevia,|,vernudos,verbarras,vercargas,|,$btnVerSubelements,$btnVerWireframe,$btnVerRender,$cmbSector,|,$btnRedraw,vzoom,paneo,rotar,|,vfrontal,vsuperior,vlateral,visometrica,|,estructinfo,tablanudos,tablabarras,carganudos,cargabarras,apoyos,tablasecciones,materiales,|,asistente_generar"
+  }
+}

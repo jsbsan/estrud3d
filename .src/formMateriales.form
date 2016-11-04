@@ -1,0 +1,22 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,104,64)
+  Resizable = False
+  { tblMats TableView
+    MoveScaled(1,1,102,55)
+    Font = Font["-1"]
+    Mode = Select.Single
+    ShowCursor = True
+  }
+  { btnElegir Button
+    MoveScaled(17,58,16,4)
+    Text = ("Elegir")
+    Default = True
+  }
+  { btnSalir Button
+    MoveScaled(67,58,16,4)
+    Text = ("Salir")
+    Cancel = True
+  }
+}

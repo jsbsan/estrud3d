@@ -1,0 +1,114 @@
+' Gambas class file
+
+
+
+Public Sub Form_Open()
+
+    ' lleno las tablas
+
+    Dim a As Integer
+
+    tab.Count = 3
+    tab[0].Text = ("Parametros")
+    ' tab[1].Text = ("Esfuerzos")
+    ' tab[2].Text = ("Armadura")
+    
+    tblLosas.Rows = 11 ' TODO fix for more 
+    
+    tblLosas.Cols = 10
+    
+ 
+    tblLosas.Header = GridView.Horizontal
+    
+    tblLosas.Columns(0, "Nro")
+    tblLosas.Columns(1, "No",,, Align.Center, "0")
+    tblLosas.Columns(0, "Piso",,, Align.Center, "0")
+    tblLosas.Columns(2, "lx",,, Align.Right)
+    tblLosas.Columns(3, "lz",,, Align.Right)
+    tblLosas.Columns(4, "esp",,, Align.Right)
+    tblLosas.Columns(5, "pp",,, Align.Right)
+    tblLosas.Columns(6, "g",,, Align.Right)
+    tblLosas.Columns(7, "p",,, Align.Right)
+    tblLosas.Columns(8, "q",,, Align.Right, "0.000")
+    tblLosas.Columns(9, "aux",,, Align.Right)
+    
+
+    llenartabla
+      
+End
+
+
+Public Sub btnSalir_Click()
+
+    Me.Close(0)
+
+End
+
+Sub llenartabla()
+    
+  
+  Dim n As Integer
+  
+
+  With modEstru
+      
+  
+    tblLosas.Rows = .losas.Count
+    
+    
+  
+    For n = 0 To .losas.Max
+    If tab.Index = 0 Then
+        tblLosas.Cell(n, 0, .losas[n].piso)
+        tblLosas.Cell(n, 1, .losas[n].numero)
+        tblLosas.Cell(n, 2, Format$(modAlgebra.Distancia(.nudo[.losas[n].Nudo1], .nudo[.losas[n].Nudo2]), "0.00")) 'lx
+        tblLosas.Cell(n, 3, Format(modAlgebra.Distancia(.nudo[.losas[n].Nudo3], .nudo[.losas[n].Nudo1]), "0.00")) 'lz
+        tblLosas.Cell(n, 4, Format$(.losas[n].d, .setting.formato_datos))
+        tblLosas.Cell(n, 5, Format$(.losas[n].d * .material[.losas[n].material].densidad, .setting.formato_datos))
+        tblLosas.Cell(n, 6, Format$(.losas[n].g, .setting.formato_datos))
+        tblLosas.Cell(n, 7, Format$(.losas[n].p, .setting.formato_datos))
+        tblLosas.Cell(n, 8, "=F" & Str$(n + 1) & "+G" & Str$(n + 1) & "+H" & Str$(n + 1))
+        
+
+    End If
+    Next
+    
+    tblLosas.Recalcular
+    
+  End With
+    
+End
+
+
+Public Sub btnAceptar_Click()
+
+    'gurdo los datoos
+    
+  Dim n As Integer
+  
+
+
+    For n = 0 To modEstru.losas.Max
+     
+        modEstru.losas[n].d = tblLosas.CellFloat(n, 4)
+        modEstru.losas[n].g = tblLosas.CellFloat(n, 6)
+        modEstru.losas[n].p = tblLosas.CellFloat(n, 7)
+        
+    Next
+    
+    
+    
+    
+    Me.Close
+    
+    modEstru.RecalcularAreaLosas
+    
+    For n = 0 To modEstru.losas.Max
+        FMain.debugInfo("Cargando losa " & Str(n + 1) & "de " & Str(modEstru.losas.Count),, True)
+     
+        modEstru.ReLoadElement(modEstru.losas[n].numero, modEstru.tipo_losa, modEstru.losas[n].piso, modEstru.losas[n].p, 2)
+    Next
+    
+    
+    
+End

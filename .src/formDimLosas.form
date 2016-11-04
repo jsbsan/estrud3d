@@ -1,0 +1,63 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,89,62)
+  Text = ("Losas")
+  Arrangement = Arrange.Fill
+  { Panel4 Panel
+    MoveScaled(-1,6,89,57)
+    Expand = True
+    Arrangement = Arrange.Vertical
+    Padding = 1
+    { Panel3 Panel
+      MoveScaled(0,0,88,4)
+      Arrangement = Arrange.Fill
+      { tab TabStrip
+        MoveScaled(1,0,79,4)
+        Expand = True
+        Padding = 1
+        Count = 4
+        Index = 0
+        Text = ("")
+        Index = 1
+        Text = ("")
+        Index = 2
+        Text = ("")
+        Index = 3
+        Text = ("")
+        Index = 0
+      }
+    }
+    { Panel1 Panel
+      MoveScaled(7,8,70,40)
+      Background = Color.Cyan
+      Expand = True
+      Arrangement = Arrange.Fill
+      { tblLosas SpreadSheet
+        MoveScaled(10,5,47,21)
+        Expand = True
+      }
+    }
+    { Panel2 Panel
+      MoveScaled(0,51,88,5)
+      Arrangement = Arrange.Row
+      Padding = 2
+      { lblInfo Label
+        MoveScaled(1,0,52,4)
+      }
+      { btnAceptar Button
+        MoveScaled(56,0,13,4)
+        Text = ("Aceptar")
+        Default = True
+      }
+      { Panel5 Panel
+        MoveScaled(69,0,5,4)
+      }
+      { btnSalir Button
+        MoveScaled(74,0,13,4)
+        Text = ("Cancelar")
+        Cancel = True
+      }
+    }
+  }
+}

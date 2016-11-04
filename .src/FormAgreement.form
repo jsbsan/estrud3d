@@ -1,0 +1,28 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,89,59)
+  Text = ("estru3D - Terminos y Condiciones")
+  { btnCancel Button
+    MoveScaled(72,54,16,4)
+    Text = ("Cancelar")
+    Cancel = True
+  }
+  { CheckBox1 CheckBox
+    MoveScaled(3,55,50,3)
+    Text = ("Acepto los terminos y condiciones.")
+  }
+  { txtTerms TextArea
+    MoveScaled(1,5,87,45)
+    Text = ("TextArea1")
+  }
+  { btnAceppt Button
+    MoveScaled(54,54,16,4)
+    Enabled = False
+    Text = ("Aceptar")
+  }
+  { Label1 Label
+    MoveScaled(1,1,86,4)
+    Text = ("Los usuarios de estru3D aceptan de hecho los siguientes términos y condiciones")
+  }
+}

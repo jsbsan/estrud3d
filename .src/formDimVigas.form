@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,88,62)
+  { tblVigas TableView
+    MoveScaled(0,0,35,58)
+    ShowCursor = True
+  }
+  { btnSalir Button
+    MoveScaled(72,57,13,4)
+    Text = ("Salir")
+  }
+  { ValueBox1 ValueBox
+    MoveScaled(45,32,24,4)
+  }
+}
